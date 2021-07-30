@@ -1,0 +1,9 @@
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\bin\Debug\netcoreapp3.1\Core.deps.json
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\bin\Debug\netcoreapp3.1\Core.dll
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\bin\Debug\netcoreapp3.1\Core.pdb
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\obj\Debug\netcoreapp3.1\Core.csprojAssemblyReference.cache
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\obj\Debug\netcoreapp3.1\Core.dll
+C:\workspace\TDD\Refactoring_Case1\ChequeWriterAPI\Core\obj\Debug\netcoreapp3.1\Core.pdb
