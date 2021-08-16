@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Sample2/Core.UnitTests/bin/Debug/netcoreapp3.1
+/Sample2/Core.UnitTests/obj
+/Sample2/Core/bin/Debug/netcoreapp3.1
+/Sample2/Core/obj
+/Sample2/.vs
+/Sample2/ChequeWriterAPI/obj
+/Sample2/ChequeWriterAPI/bin/Debug/netcoreapp3.1
