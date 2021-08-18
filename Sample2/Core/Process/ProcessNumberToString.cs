@@ -14,7 +14,9 @@ namespace Core.Process
         {
             numberDataSet = dataSet;
         }
-        string oneStr = "", tensStr = "", hunderedsStr = ""; //, milionStr = "" , thousandsStr = ""
+        public string oneStr { get; set; }
+        public string tensStr { get; set; }
+        public string hunderedsStr { get; set; }
 
         public string ConvertNumberToStringProcess(string number)
         {
@@ -28,7 +30,7 @@ namespace Core.Process
                     }
                     else
                     {
-                        return convertIntegerNumber(number);
+                        return ConvertIntegerNumber(number);
                     }
                 }
                 else
@@ -61,13 +63,13 @@ namespace Core.Process
                 switch (i)
                 {
                     case (int)NumberGroupTypeEnums.Millions:
-                        milionStr = ProcessMillionPart(i, sequence);
+                        milionStr = ProcessMillionsPart(i, sequence);
                         break;
                     case (int)NumberGroupTypeEnums.Thousands:
                         thousandsStr = ProcessThousandsPart(i, sequence);
                         break;
                     default:
-                        result = ProcessHundredPart(i, sequence);
+                        result = ProcessHundredsPart(i, sequence);
                         break;
                 }
 
@@ -89,12 +91,11 @@ namespace Core.Process
             return result;
         }
 
-        private string convertIntegerNumber(string Number)
+        private string ConvertIntegerNumber(string Number)
         {
             string milionStr = "", thousandsStr = "";
 
             var result = string.Empty;
-            var dollar = string.Empty;
 
             var sequence = Number.ToCharArray().Reverse().ToArray();
 
@@ -104,13 +105,13 @@ namespace Core.Process
                 switch (i)
                 {
                     case (int)NumberGroupTypeEnums.Millions:
-                        milionStr = ProcessMillionPart(i, sequence);
+                        milionStr = ProcessMillionsPart(i, sequence);
                         break;
                     case (int)NumberGroupTypeEnums.Thousands:
                         thousandsStr = ProcessThousandsPart(i, sequence);
                         break;
                     default:
-                        result = ProcessHundredPart(i, sequence);
+                        result = ProcessHundredsPart(i, sequence);
                         break;
                 }
 
@@ -124,36 +125,10 @@ namespace Core.Process
             return result;
         }
 
-        private string ProcessMillionPart(int i, char[] sequence)
+        private string ProcessMillionsPart(int i, char[] sequence)
         {
-            for (int j = 0; j < 3; j++)
-            {
-                if ((i + j) < sequence.Count())
-                {
-                    switch (j)
-                    {
-                        case (int)NumberGroupTypeEnums.Ones:
-                            oneStr = numberDataSet.GetBaseNumberDataSet(Char.GetNumericValue(sequence[(i + j)]));
-                            break;
-                        case (int)NumberGroupTypeEnums.Tens:
-                            if (sequence[i + j] == '1')
-                            {
-                                oneStr = "";
-                                string value = string.Format("{0}{1}", sequence[i + j], sequence[i]);
+            ProcessNumberPart(i, sequence);
 
-                                tensStr = numberDataSet.GetTensNumberDataSet(double.Parse(value));
-                            }
-                            else
-                                tensStr = numberDataSet.GetTensNumberDataSet(Char.GetNumericValue(sequence[(i + j)]));
-                            break;
-                        case (int)NumberGroupTypeEnums.Hundreds:
-                            hunderedsStr = numberDataSet.GetBaseNumberDataSet(Char.GetNumericValue(sequence[(i + j)]));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
             if (!string.IsNullOrEmpty(hunderedsStr))
                 return string.Format("{0} Hundred {1} {2} Million", hunderedsStr.Trim(), tensStr.Trim(), oneStr.Trim());
             else if (!string.IsNullOrEmpty(tensStr))
@@ -166,34 +141,8 @@ namespace Core.Process
 
         private string ProcessThousandsPart(int i, char[] sequence)
         {
-            for (int j = 0; j < 3; j++)
-            {
-                if ((i + j) < sequence.Count())
-                {
-                    switch (j)
-                    {
-                        case (int)NumberGroupTypeEnums.Ones:
-                            oneStr = numberDataSet.GetBaseNumberDataSet(Char.GetNumericValue(sequence[(i + j)]));
-                            break;
-                        case (int)NumberGroupTypeEnums.Tens:
-                            if (sequence[i + j] == '1')
-                            {
-                                oneStr = "";
-                                string value = string.Format("{0}{1}", sequence[i + j], sequence[i]);
+            ProcessNumberPart(i, sequence);
 
-                                tensStr = numberDataSet.GetTensNumberDataSet(double.Parse(value));
-                            }
-                            else
-                                tensStr = numberDataSet.GetTensNumberDataSet(Char.GetNumericValue(sequence[(i + j)]));
-                            break;
-                        case (int)NumberGroupTypeEnums.Hundreds:
-                            hunderedsStr = numberDataSet.GetBaseNumberDataSet(Char.GetNumericValue(sequence[(i + j)]));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
             if (!string.IsNullOrEmpty(hunderedsStr) && !string.IsNullOrWhiteSpace(oneStr))
                 return string.Format("{0} Hundred {1} {2} Thousand", hunderedsStr.Trim(), tensStr.Trim(), oneStr.Trim());
             else if (!string.IsNullOrEmpty(hunderedsStr))
@@ -206,7 +155,22 @@ namespace Core.Process
                 return "";
         }
 
-        private string ProcessHundredPart(int i, char[] sequence)
+        private string ProcessHundredsPart(int i, char[] sequence)
+        {
+            ProcessNumberPart(i, sequence);
+
+            if (!string.IsNullOrEmpty(hunderedsStr))
+                return string.Format("{0} Hundred {1} {2}", hunderedsStr.Trim(), tensStr.Trim(), oneStr.Trim()).Trim();
+            else if (!string.IsNullOrEmpty(tensStr))
+                return string.Format("{0} {1}", tensStr.Trim(), oneStr.Trim()).Trim();
+            else if (!string.IsNullOrEmpty(oneStr))
+                return string.Format("{0}", oneStr.Trim()).Trim();
+            else
+                return "";
+
+        }
+
+        private void ProcessNumberPart(int i, char[] sequence)
         {
             for (int j = 0; j < 3; j++)
             {
@@ -236,15 +200,6 @@ namespace Core.Process
                     }
                 }
             }
-            if (!string.IsNullOrEmpty(hunderedsStr))
-                return string.Format("{0} Hundred {1} {2}", hunderedsStr.Trim(), tensStr.Trim(), oneStr.Trim()).Trim();
-            else if (!string.IsNullOrEmpty(tensStr))
-                return string.Format("{0} {1}", tensStr.Trim(), oneStr.Trim()).Trim();
-            else if (!string.IsNullOrEmpty(oneStr))
-                return string.Format("{0}", oneStr.Trim()).Trim();
-            else
-                return "";
-
         }
 
         private string CalculateCents(string number)
