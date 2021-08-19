@@ -4,36 +4,30 @@ using ChequeWriterFramework;
 
 namespace Core.Process
 {
-    public class ProcessNumberToString
+    public class ConvertMoneyToString
     {
         private readonly ProcessCentsPart _processCentsPart;
         private readonly ProcessDollarPart _processDoallar;
 
-        public ProcessNumberToString(INumberDataSet dataSet)
+        public ConvertMoneyToString(INumberDataSet dataSet)
         {
             _processCentsPart = new ProcessCentsPart(dataSet);
             _processDoallar = new ProcessDollarPart(dataSet);
         }
 
-        public string ConvertNumberToStringProcess(string number)
+        public string ConvertMoneyToStringProcess(string number)
         {
             try
             {
                 if (Validataion(number))
                 {
                     if (number.Contains("."))
-                    {
                         return ConverDallorAndCents(number);
-                    }
                     else
-                    {
                         return _processDoallar.ConvertDollar(number);
-                    }
                 }
                 else
-                {
                     return Consts.VALIDATION_ERROR_MESSAGE;
-                }
             }
             catch
             {
@@ -59,9 +53,7 @@ namespace Core.Process
             bool result = false;
 
             if (!string.IsNullOrEmpty(number) && decimal.TryParse(number, out decimal value))
-            {
                 result = true;
-            }
 
             return result;
         }

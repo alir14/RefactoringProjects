@@ -1,9 +1,4 @@
-﻿using Core.DBLayer;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Process
+﻿namespace Core.Process
 {
     public interface IConvertNumber
     {

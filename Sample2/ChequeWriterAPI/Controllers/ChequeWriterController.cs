@@ -7,9 +7,9 @@ namespace ChequeWriterAPI.Controllers
     [Route("[controller]")]
     public class ChequeWriterController: ControllerBase
     {
-        ProcessNumberToString _process;
+        ConvertMoneyToString _process;
 
-        public ChequeWriterController(ProcessNumberToString process)
+        public ChequeWriterController(ConvertMoneyToString process)
         {
             _process = process;
         }
@@ -22,7 +22,7 @@ namespace ChequeWriterAPI.Controllers
 
             if (!string.IsNullOrEmpty(amount))
             {
-                result = _process.ConvertNumberToStringProcess(amount);
+                result = _process.ConvertMoneyToStringProcess(amount);
                 return Ok(result);
             }
             else
